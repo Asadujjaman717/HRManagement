@@ -1,0 +1,108 @@
+﻿@model IEnumerable<HrManagement.Models.Salary>
+
+@{
+    ViewData["Title"] = "Salary Sheet";
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    var selectedCompany = (Guid)ViewBag.SelectedCompany;
+    var selectedYear = (int)ViewBag.SelectedYear;
+    var selectedMonth = (int)ViewBag.SelectedMonth;
+}
+
+<h2>Salary Sheet</h2>
+
+<form method="get" asp-controller="Salary" asp-action="Index">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <select class="form-select" name="companyId" required>
+                @foreach (var c in companies)
+                {
+                    <option value="@c.ComId" selected="@(c.ComId == selectedCompany ? "selected" : null)">
+                        @c.ComName
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="year">
+                @for (int y = DateTime.Now.Year - 5; y <= DateTime.Now.Year + 5; y++)
+                {
+                    <option value="@y" selected="@(y == selectedYear ? "selected" : null)">@y</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="month">
+                @for (int m = 1; m <= 12; m++)
+                {
+                    <option value="@m" selected="@(m == selectedMonth ? "selected" : null)">
+                        @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2 text-end">
+            <button type="submit" class="btn btn-primary">Generate Salary</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Gross</th>
+            <th>Basic</th>
+            <th>HRent</th>
+            <th>Medical</th>
+            <th>Absent Deduct</th>
+            <th>Payable</th>
+            <th>Paid</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr data-id="@s.Id">
+                <td>@s.Employee?.EmpName</td>
+                <td>@s.Gross.ToString("F2")</td>
+                <td>@s.Basic.ToString("F2")</td>
+                <td>@s.Hrent.ToString("F2")</td>
+                <td>@s.Medical.ToString("F2")</td>
+                <td>@s.AbsentAmount.ToString("F2")</td>
+                <td>@s.PayableAmount.ToString("F2")</td>
+                <td>@(s.IsPaid ? "Yes" : "No")</td>
+                <td>
+                    @if (!s.IsPaid)
+                    {
+                        <button class="btn btn-sm btn-success btn-pay" data-id="@s.Id">Mark as Paid</button>
+                    }
+                    else
+                    {
+                        <span class="text-success">Paid</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.btn-pay').click(function () {
+                const id = $(this).data('id');
+                console.log('id',id);
+                if (!confirm('Mark this salary as paid?')) return;
+
+                $.post('/Salary/MarkPaid', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Error marking salary as paid.');
+                    }
+                });
+            });
+        });
+    </script>
+}

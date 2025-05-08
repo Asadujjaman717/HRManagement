@@ -1,0 +1,171 @@
+﻿@model IEnumerable<HrManagement.Models.Designation>
+@{
+    ViewData["Title"] = "Designation Management";
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    var departments = ViewBag.Departments as List<HrManagement.Models.Department>;
+    var selectedCompany = (Guid?)ViewBag.SelectedCompany ?? Guid.Empty;
+}
+
+<h2>Designation Management</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" asp-controller="Designation" asp-action="Index">
+            <div class="input-group">
+                <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled selected>Select a company</option>
+                    @foreach (var company in companies)
+                    {
+                        <option value="@company.ComId"
+                                selected="@(selectedCompany == company.ComId ? "selected" : null)">
+                            @company.ComName
+                        </option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-outline-primary">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        @if (selectedCompany != Guid.Empty)
+        {
+            <button class="btn btn-primary" id="btnAdd">Add Designation</button>
+        }
+    </div>
+</div>
+
+@if (selectedCompany != Guid.Empty)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Designation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="designationTable">
+            @foreach (var item in Model)
+            {
+                <tr data-id="@item.DesigId">
+                    <td>@item.DesigName</td>
+                    <td>
+                        <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                        <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">Please select a company to manage designations.</p>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="designationModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="designationForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add/Edit Designation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="DesigId" name="DesigId" />
+                    <input type="hidden" id="ComId" name="ComId" value="@selectedCompany" />
+
+                    <div class="mb-3">
+                        <label for="DesigName" class="form-label">Designation Name</label>
+                        <input type="text" class="form-control" id="DesigName" name="DesigName" required />
+                    </div>
+
+                    @* <div class="mb-3">
+                        <label for="DeptId" class="form-label">Department</label>
+                        <select class="form-select" id="DeptId" name="DeptId" required>
+                            <option value="" disabled selected>Select a Department</option>
+                            @foreach (var department in departments)
+                            {
+                                <option value="@department.DeptId">@department.DeptName</option>
+                            }
+                        </select>
+                    </div> *@
+
+                    <div class="mb-3">
+                        <label for="DeptId" class="form-label">Department</label>
+                        <select class="form-select" name="DeptId" id="DeptId" required>
+                            <option value="">Select Department</option>
+                            @foreach (var dept in departments.Where(x => x.ComId == selectedCompany))
+                            {
+                                <option value="@dept.DeptId">@dept.DeptName</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById('designationModal'));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#designationForm')[0].reset();
+                $('#DesigId').val('');
+                $('#modalTitle').text('Add Designation');
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const id = $(this).closest('tr').data('id');
+
+                $.get('/Designation/GetById', { id }, function (data) {
+                    $('#DesigId').val(data.desigId);
+                    $('#ComId').val(data.comId);
+                    $('#DesigName').val(data.desigName);
+                    $('#DeptId').val(data.deptId); // Set the selected department
+                    $('#modalTitle').text('Edit Designation');
+                    modal.show();
+                });
+            });
+
+            $('#designationForm').submit(function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                const url = isEdit ? '/Designation/Edit' : '/Designation/Create';
+
+                $.post(url, formData, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert(res.message || 'Error occurred');
+                    }
+                });
+            });
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure to delete this designation?')) return;
+                const id = $(this).closest('tr').data('id');
+
+                $.post('/Designation/Delete', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed');
+                    }
+                });
+            });
+        });
+    </script>
+}

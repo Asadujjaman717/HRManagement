@@ -1,0 +1,228 @@
+﻿@* @{
+    ViewData["Title"] = "Attendance Summary (Tabulator)";
+    var departments = ViewBag.Departments as List<HrManagement.Models.Department>;
+}
+
+<h2>Attendance Summary Report</h2>
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <select id="deptFilter" class="form-select">
+            <option value="">-- Department --</option>
+            @foreach (var dept in departments)
+            {
+                <option value="@dept.DeptId">@dept.DeptName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" id="fromDate" class="form-control" placeholder="From Date" />
+    </div>
+    <div class="col-md-3">
+        <input type="date" id="toDate" class="form-control" placeholder="To Date" />
+    </div>
+    <div class="col-md-3">
+        <button id="filterBtn" class="btn btn-primary w-100">Filter</button>
+    </div>
+</div>
+
+<div class="mb-3 text-end">
+    <button class="btn btn-outline-secondary me-2" onclick="exportExcel()">Export Excel</button>
+    <button class="btn btn-outline-info me-2" onclick="exportCSV()">Export CSV</button>
+    <button class="btn btn-outline-danger" onclick="exportPDF()">Export PDF</button>
+</div>
+
+<div id="attendance-table"></div>
+
+<link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet">
+<script src="https://unpkg.com/tabulator-tables@5.4.4/dist/js/tabulator.min.js"></script>
+
+<script>
+    let attendanceTable;
+
+    function loadAttendanceTable(params = {}) {
+        attendanceTable = new Tabulator("#attendance-table", {
+            layout: "fitColumns",
+            height: "500px",
+            ajaxURL: "/Report/GetAttendanceSummary",
+            ajaxParams: params,
+            pagination: "local",
+            paginationSize: 10,
+            columns: [
+                { title: "Employee", field: "employeeName" },
+                { title: "Present", field: "present", hozAlign: "center" },
+                { title: "Absent", field: "absent", hozAlign: "center" },
+                { title: "Late", field: "late", hozAlign: "center" }
+            ],
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadAttendanceTable();
+
+        document.getElementById("filterBtn").addEventListener("click", function () {
+            const deptId = document.getElementById("deptFilter").value;
+            const fromDate = document.getElementById("fromDate").value;
+            const toDate = document.getElementById("toDate").value;
+
+            attendanceTable.setData("/Report/GetAttendanceSummary", {
+                deptId, fromDate, toDate
+            });
+        });
+    });
+
+     function exportExcel() {
+        attendanceTable.download("xlsx", "AttendanceReport.xlsx", { sheetName: "Attendance" });
+    }
+
+    function exportCSV() {
+        attendanceTable.download("csv", "AttendanceReport.csv");
+    }
+
+    function exportPDF() {
+        attendanceTable.download("pdf", "AttendanceReport.pdf", {
+            orientation: "portrait",
+            title: "Attendace Report"
+        });
+    }
+</script>
+ *@
+
+
+@{
+    ViewData["Title"] = "Attendance Report";
+}
+
+<h2>Attendance Report</h2>
+<div class="row mb-3">
+    <div class="col-md-3">
+        <select id="ddlCompany" class="form-select"></select>
+    </div>
+    <div class="col-md-3">
+        <select id="ddlDepartment" class="form-select"></select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" id="fromDate" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <input type="date" id="toDate" class="form-control" />
+    </div>
+</div>
+<div class="mb-3">
+    <button id="btnLoad" class="btn btn-primary">Load Report</button>
+    <button id="btnExportExcel" class="btn btn-success">Export Excel</button> 
+     <button id="btnExportCSV" class="btn btn-primary">Export CSV</button>
+     <button id="btnExportPDF" class="btn btn-danger">Export PDF</button>
+        @* <button id="export-attendance-csv">Export CSV</button>
+<button id="export-attendance-pdf">Export PDF</button> *@
+</div>
+
+<div id="attendanceTable" style="height: 500px;"></div>
+
+
+@section Scripts {
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/tabulator-tables@5.4.4/dist/js/tabulator.min.js"></script>
+
+    <!-- Tabulator CSS -->
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+
+    <!-- Tabulator JS -->
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+
+    <!-- Tabulator Core -->
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+
+    <!-- jsPDF & AutoTable (required for PDF export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+     
+
+
+
+    <script>
+                let table;
+
+        $(document).ready(function () {
+            loadCompanies();
+
+            $("#ddlCompany").change(function () {
+                const companyId = $(this).val();
+                $.get("/Report/GetDepartmentsByCompany", { companyId }, function (data) {
+                    let options = '<option value="">-- Select Department --</option>';
+                    $.each(data, (i, item) => {
+                        options += `<option value="${item.id}">${item.deptName}</option>`;
+                    });
+                    $("#ddlDepartment").html(options);
+                });
+            });
+
+            $("#btnLoad").click(function () {
+                table = new Tabulator("#attendanceTable", {
+                    height: "500px",
+                    layout: "fitColumns",
+                    ajaxURL: "/Report/GetAttendanceTabulator",
+                    ajaxConfig: "GET",
+                    ajaxParams: {
+                        companyId: $("#ddlCompany").val(),
+                        deptId: $("#ddlDepartment").val(),
+                        fromDate: $("#fromDate").val(),
+                        toDate: $("#toDate").val()
+                    },
+                    columns: [
+                        { title: "Employee Name", field: "empName" },
+                        { title: "Date", field: "attDate" },
+                        { title: "Status", field: "status" },
+                        { title: "Department", field: "department" },
+                        { title: "Designation", field: "designation" },
+                        { title: "Shift", field: "shift" }
+                    ],
+                    ajaxError: function (xhr, textStatus, errorThrown) {
+                        console.error("Ajax Error:", errorThrown);
+                    }
+                });
+            });
+
+            $("#btnExportExcel").click(function () {
+                if (table) {
+                    table.download("xlsx", "AttendanceReport.xlsx", { sheetName: "Attendance" });
+                } else {
+                    alert("Please load the report before exporting.");
+                }
+            });
+            $("#btnExportCSV").click(function () {
+                if (table) {
+                    table.download("csv", "AttendanceTabulator.csv");
+                }
+            });
+
+                    $("#btnExportPDF").click(function () {
+            if (table) {
+                table.download("pdf", "AttendanceTabulator.pdf", {
+                    orientation: "portrait",
+                    title: "Attendance List"
+                });
+            } else {
+                alert("Please load the report before exporting.");
+            }
+        });
+
+
+           
+
+            function loadCompanies() {
+                $.get("/Report/GetAll", function (data) {
+                    let options = '<option value="">-- Select Company --</option>';
+                    $.each(data, (i, item) => {
+                        options += `<option value="${item.id}">${item.compName}</option>`;
+                    });
+                    $("#ddlCompany").html(options);
+                });
+            }
+
+
+        });
+
+    </script>
+}

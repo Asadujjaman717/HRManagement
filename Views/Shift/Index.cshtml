@@ -1,0 +1,318 @@
+﻿@* @model IEnumerable<HrManagement.Models.Shift>
+@{
+    ViewData["Title"] = "Shift Management";
+    var companies = ViewBag.Companies as List<Company>;
+    Guid selectedCompany = ViewBag.SelectedCompany ?? Guid.Empty;
+}
+
+<h2>Shift Management</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" asp-controller="Shift" asp-action="Index">
+            <div class="input-group">
+                <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled selected="@(selectedCompany == Guid.Empty ? "selected" : null)">Select a company</option>
+                    @foreach (var company in companies)
+                    {
+                        <option value="@company.ComId" selected="@(selectedCompany == company.ComId ? "selected" : null)">
+                            @company.ComName
+                        </option>
+                    }
+
+                </select>
+                <button type="submit" class="btn btn-outline-primary">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" id="btnAdd">Add Shift</button>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Shift Name</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Is Late</th>
+            <th>Company</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shift in Model)
+        {
+            var isLate = DateTime.Now.TimeOfDay > shift.StartTime;
+            <tr data-id="@shift.ShiftId">
+                <td>@shift.ShiftName</td>
+                <td>@shift.StartTime.ToString("hh\\:mm")</td>
+                <td>@shift.EndTime.ToString("hh\\:mm")</td>
+                <td>
+                    <span class="badge bg-@(isLate ? "danger" : "success")">
+                        @(isLate ? "Yes" : "No")
+                    </span>
+                </td>
+                <td>@shift.Company?.ComName</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="shiftModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="shiftForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add/Edit Shift</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ShiftId" name="ShiftId" />
+                    <input type="hidden" id="ComId" name="ComId" value="@ViewBag.SelectedCompany" />
+
+                    <div class="mb-3">
+                        <label for="ShiftName" class="form-label">Shift Name</label>
+                        <input type="text" class="form-control" id="ShiftName" name="ShiftName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="StartTime" class="form-label">Start Time</label>
+                        <input type="time" class="form-control" id="StartTime" name="StartTime" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="EndTime" class="form-label">End Time</label>
+                        <input type="time" class="form-control" id="EndTime" name="EndTime" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById('shiftModal'));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#shiftForm')[0].reset();
+                $('#ShiftId').val('');
+                $('#ComId').val('@ViewBag.SelectedCompany');
+                $('#modalTitle').text('Add Shift');
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const id = $(this).closest('tr').data('id');
+
+                $.get('/Shift/GetById', { id }, function (data) {
+                    $('#ShiftId').val(data.shiftId);
+                    $('#ShiftName').val(data.shiftName);
+                    $('#StartTime').val(data.startTime);
+                    $('#EndTime').val(data.endTime);
+                    $('#ComId').val(data.comId);
+                    $('#modalTitle').text('Edit Shift');
+                    modal.show();
+                });
+            });
+
+            $('#shiftForm').submit(function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const url = isEdit ? '/Shift/Edit' : '/Shift/Create';
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.success) {
+                            modal.hide();
+                            location.reload();
+                        } else {
+                            alert(res.message || 'Error occurred');
+                        }
+                    }
+                });
+            });
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure you want to delete this shift?')) return;
+
+                const id = $(this).closest('tr').data('id');
+
+                $.post('/Shift/Delete', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed');
+                    }
+                });
+            });
+        });
+    </script>
+}
+ *@
+
+
+            @model IEnumerable<HrManagement.Models.Shift>
+@{
+    ViewData["Title"] = "Shift Management";
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    var selectedCompany = (Guid)ViewBag.SelectedCompany;
+}
+
+<h2>Shift Management</h2>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form method="get" asp-action="Index" asp-controller="Shift">
+            <div class="input-group">
+                <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled>Select Company</option>
+                    @foreach (var com in companies)
+                    {
+                        <option value="@com.ComId" selected="@(com.ComId == selectedCompany)">
+                            @com.ComName
+                        </option>
+                    }
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Filter</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-8 text-end">
+        <button class="btn btn-primary" id="btnAdd">Add Shift</button>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Shift Name</th>
+            <th>In</th>
+            <th>Out</th>
+            <th>Late</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ShiftId">
+                <td>@item.ShiftName</td>
+                <td>@item.InTime</td>
+                <td>@item.OutTime</td>
+                <td>@item.LateTime</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="shiftModal" tabindex="-1" aria-labelledby="shiftModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="shiftForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shiftModalLabel">Add/Edit Shift</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="ShiftId" id="ShiftId" />
+                    <input type="hidden" name="ComId" id="ComId" value="@selectedCompany" />
+                    <div class="mb-3">
+                        <label class="form-label">Shift Name</label>
+                        <input type="text" class="form-control" name="ShiftName" id="ShiftName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">In Time</label>
+                        <input type="time" class="form-control" name="InTime" id="InTime" step="60" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Out Time</label>
+                        <input type="time" class="form-control" name="OutTime" id="OutTime" step="60" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Late Time</label>
+                        <input type="time" class="form-control" name="LateTime" id="LateTime" step="60" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById("shiftModal"));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#shiftForm')[0].reset();
+                $('#ShiftId').val('');
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const id = $(this).closest('tr').data('id');
+
+                $.get('/Shift/GetById', { id }, function (data) {
+                    $('#ShiftId').val(data.shiftId);
+                    $('#ShiftName').val(data.shiftName);
+                    $('#InTime').val(data.inTime);
+                    $('#OutTime').val(data.outTime);
+                    $('#LateTime').val(data.lateTime);
+                    modal.show();
+                });
+            });
+
+            $('#shiftForm').submit(function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                const url = isEdit ? '/Shift/Edit' : '/Shift/Create';
+
+                $.post(url, formData, function (res) {
+                    if (res.success) location.reload();
+                    else alert('Error occurred');
+                });
+            });
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure you want to delete this shift?')) return;
+                const id = $(this).closest('tr').data('id');
+                $.post('/Shift/Delete', { id }, function (res) {
+                    if (res.success) location.reload();
+                    else alert('Delete failed');
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<HrManagement.Models.AttendanceSummary>
+
+@{
+    ViewData["Title"] = "Attendance Summary";
+
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    Guid selectedCompany = ViewBag.SelectedCompany ?? Guid.Empty;
+    int selectedYear = ViewBag.SelectedYear ?? DateTime.Now.Year;
+    int selectedMonth = ViewBag.SelectedMonth ?? DateTime.Now.Month;
+}
+
+<h2>Attendance Summary</h2>
+
+<form method="get" asp-controller="AttendanceSummary" asp-action="Index">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            @* <select class="form-select" name="companyId" required>
+                <option disabled>Select Company</option>
+                @foreach (var company in companies)
+                {
+                    <option value="@company.ComId" @(company.ComId == selectedCompany ? "selected" : "")>
+                        @company.ComName
+                    </option>
+                }
+            </select> *@
+
+            <select class="form-select" name="companyId" onchange="this.form.submit()">
+                <option disabled selected>Select a company</option>
+                @foreach (var company in companies)
+                {
+                    <option value="@company.ComId"
+                            selected="@(selectedCompany == company.ComId ? "selected" : null)">
+                        @company.ComName
+                    </option>
+                }
+            </select>
+        </div>
+
+       @*  <div class="col-md-3">
+            <select class="form-select" name="year" required>
+                @for (int y = DateTime.Now.Year - 5; y <= DateTime.Now.Year + 5; y++)
+                {
+                    <option value="@y" @(y == selectedYear ? "selected" : "")>@y</option>
+                }
+            </select>
+        </div> *@
+
+        <div class="col-md-3">
+            <select class="form-select" name="year" required>
+                @for (int y = DateTime.Now.Year - 5; y <= DateTime.Now.Year + 5; y++)
+                {
+                    <option value="@y" selected="@(y == selectedYear ? "selected" : null)">@y</option>
+                }
+            </select>
+        </div>
+
+        @* <div class="col-md-3">
+            <select class="form-select" name="month" required>
+                @for (int m = 1; m <= 12; m++)
+                {
+                    <option value="@m" @(m == selectedMonth ? "selected" : "")>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)</option>
+                }
+            </select>
+        </div> *@
+        <div class="col-md-3">
+            <select class="form-select" name="month" required>
+                @for (int m = 1; m <= 12; m++)
+                {
+                    <option value="@m" selected="@(m == selectedMonth ? "selected" : null)">
+                        @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
+                    </option>
+                }
+            </select>
+        </div>
+
+
+        <div class="col-md-2 text-end">
+            <button class="btn btn-primary" type="submit">Generate Summary</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Present</th>
+            <th>Late</th>
+            <th>Absent</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var summary in Model)
+        {
+            <tr>
+                <td>@summary.Employee?.EmpName</td>
+                <td>@summary.Present</td>
+                <td>@summary.Late</td>
+                <td>@summary.Absent</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,159 @@
+﻿@model IEnumerable<HrManagement.Models.Company>
+@{
+    ViewData["Title"] = "Company Management";
+}
+
+<h2>Company Management</h2>
+
+<button class="btn btn-primary mb-3" id="btnAdd">Add Company</button>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Basic %</th>
+            <th>Hrent %</th>
+            <th>Medical %</th>
+            <th>IsInactive</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="companyTable">
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.ComId">
+                <td>@item.ComName</td>
+                <td>@item.Basic</td>
+                <td>@item.Hrent</td>
+                <td>@item.Medical</td>
+                <td>@item.IsInactive</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="companyModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="companyForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add/Edit Company</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="ComId" name="ComId" />
+                    <div class="mb-3">
+                        <label for="ComName" class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="ComName" name="ComName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Basic" class="form-label">Basic %</label>
+                        <input type="number" class="form-control" id="Basic" name="Basic" step="0.01" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Hrent" class="form-label">Hrent %</label>
+                        <input type="number" class="form-control" id="Hrent" name="Hrent" step="0.01" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Medical" class="form-label">Medical %</label>
+                        <input type="number" class="form-control" id="Medical" name="Medical" step="0.01" required />
+                    </div>
+                    <div class="form-check">                        
+                        <input type="checkbox" id="IsInactive" name="IsInactive" value="true" class="form-check-input" />
+                        <label for="IsInactive" class="form-check-label">Inactive</label>              
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById('companyModal'));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#companyForm')[0].reset();
+                $('#ComId').val('');
+                $('#IsInactive').prop('checked', false); // reset checkbox
+                $('#modalTitle').text('Add Company');
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const row = $(this).closest('tr');
+                const id = row.data('id');
+
+                $.get('/Company/GetById', { id }, function (data) {
+                    $('#ComId').val(data.comId);
+                    $('#ComName').val(data.comName);
+                    $('#Basic').val(data.basic);
+                    $('#Hrent').val(data.hrent);
+                    $('#Medical').val(data.medical);
+                    $('#IsInactive').prop('checked', data.isInactive); // ✅ not .val()
+                    console.log("Edit Company IsInactive:", data.isInactive);
+                    $('#modalTitle').text('Edit Company');
+                    modal.show();
+                });
+            });
+
+            $('#companyForm').submit(function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const url = isEdit ? '/Company/Edit' : '/Company/Create';
+
+            console.log("Checkbox checked:", $('#IsInactive').prop('checked'));
+
+            
+            for (var [key, value] of formData.entries()) {
+                console.log(key + ': ' + value);
+            }
+
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert(res.message || 'Error occurred');
+                    }
+                }
+            });
+        });
+
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure you want to delete this company?')) return;
+                const id = $(this).closest('tr').data('id');
+
+                $.post('/Company/Delete', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed');
+                    }
+                });
+            });
+        });
+    </script>
+} 
+
+

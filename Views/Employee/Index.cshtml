@@ -1,0 +1,250 @@
+﻿@model IEnumerable<HrManagement.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employee Management";
+
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    var departments = ViewBag.Departments as List<HrManagement.Models.Department>;
+    var designations = ViewBag.Designations as List<HrManagement.Models.Designation>;
+    var shifts = ViewBag.Shifts as List<HrManagement.Models.Shift>;
+    Guid selectedCompany = ViewBag.SelectedCompany ?? Guid.Empty;
+}
+
+<h2>Employee Management</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" asp-controller="Employee" asp-action="Index">
+            <div class="input-group">
+                @* <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled @(selectedCompany == Guid.Empty ? "selected" : "")>Select Company</option>
+                    @foreach (var c in companies)
+                    {
+                        <option value="@c.ComId" @(selectedCompany == c.ComId ? "selected" : "")>@c.ComName</option>
+                    }
+                </select> *@
+
+                <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled selected="@(selectedCompany == Guid.Empty ? "selected" : null)">Select a company</option>
+                    @foreach (var company in companies)
+                    {
+                        <option value="@company.ComId" selected="@(selectedCompany == company.ComId ? "selected" : null)">
+                            @company.ComName
+                        </option>
+                    }
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" id="btnAdd">Add Employee</button>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Emp Code</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Gross</th>
+            <th>Basic</th>
+            <th>HRent</th>
+            <th>Medical</th>
+            <th>Others</th>
+            <th>Shift</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Join Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr data-id="@emp.EmpId">
+                <td>@emp.EmpCode</td>
+                <td>@emp.EmpName</td>
+                <td>@emp.Gender</td>
+                <td>@emp.Gross</td>
+                <td>@emp.Basic</td>
+                <td>@emp.HRent</td>
+                <td>@emp.Medical</td>
+                <td>@emp.Others</td>
+                <td>@emp.Shift?.ShiftName</td>
+                <td>@emp.Department?.DeptName</td>
+                <td>@emp.Designation?.DesigName</td>
+                <td>@emp.dtJoin.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="employeeForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add/Edit Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="EmpId" id="EmpId" />
+                    <input type="hidden" name="ComId" id="ComId" value="@selectedCompany" />
+
+                    <div class="mb-3">
+                        <label for="EmpCode" class="form-label">Employee Code</label>
+                        <input type="text" class="form-control" name="EmpCode" id="EmpCode" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="EmpName" class="form-label">Employee Name</label>
+                        <input type="text" class="form-control" name="EmpName" id="EmpName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Gender" class="form-label">Gender</label>
+                        <select class="form-select" name="Gender" id="Gender" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Gross" class="form-label">Gross Salary</label>
+                        <input type="number" class="form-control" name="Gross" id="Gross" step="0.01" required />
+                    </div>
+
+                    @* <div class="mb-3">
+                        <label for="ShiftId" class="form-label">Shift</label>
+                        <select class="form-select" name="ShiftId" id="ShiftId" required>
+                            <option value="">Select Shift</option>
+                            @foreach (var shift in shifts.Where(x => x.ComId == selectedCompany))
+                            {
+                                <option value="@shift.ShiftId">@shift.ShiftName</option>
+                            }
+                        </select>
+                    </div> *@
+
+                    <!-- Shift Dropdown -->
+                    <div class="mb-3">
+                        <label for="ShiftId" class="form-label">Shift</label>
+                        <select class="form-select" name="ShiftId" id="ShiftId" required>
+                            <option value="">Select Shift</option>
+                            @foreach (var shift in shifts.Where(x => x.ComId == selectedCompany))
+                            {
+                                <option value="@shift.ShiftId">@shift.ShiftName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="DeptId" class="form-label">Department</label>
+                        <select class="form-select" name="DeptId" id="DeptId" required>
+                            <option value="">Select Department</option>
+                            @foreach (var dept in departments.Where(x => x.ComId == selectedCompany))
+                            {
+                                <option value="@dept.DeptId">@dept.DeptName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="DesigId" class="form-label">Designation</label>
+                        <select class="form-select" name="DesigId" id="DesigId" required>
+                            <option value="">Select Designation</option>
+                            @foreach (var desig in designations.Where(x => x.ComId == selectedCompany))
+                            {
+                                <option value="@desig.DesigId">@desig.DesigName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dtJoin" class="form-label">Join Date</label>
+                        <input type="date" class="form-control" name="dtJoin" id="dtJoin" required />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById('employeeModal'));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#employeeForm')[0].reset();
+                $('#EmpId').val('');
+                $('#ComId').val('@selectedCompany');
+                $('#modalTitle').text('Add Employee');
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const id = $(this).closest('tr').data('id');
+
+                $.get('/Employee/GetById', { id }, function (data) {
+                    $('#EmpId').val(data.empId);
+                    $('#EmpCode').val(data.empCode);
+                    $('#EmpName').val(data.empName);
+                    $('#Gender').val(data.gender);
+                    $('#Gross').val(data.gross);
+                    $('#ShiftId').val(data.shiftId);
+                    $('#DeptId').val(data.deptId);
+                    $('#DesigId').val(data.desigId);
+                    $('#dtJoin').val(data.dtJoin.split('T')[0]);
+                    $('#modalTitle').text('Edit Employee');
+                    modal.show();
+                });
+            });
+
+            $('#employeeForm').submit(function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const url = isEdit ? '/Employee/Edit' : '/Employee/Create';
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.success) {
+                            modal.hide();
+                            location.reload();
+                        } else {
+                            alert(res.message || 'Error occurred');
+                        }
+                    }
+                });
+            });
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure you want to delete this employee?')) return;
+                const id = $(this).closest('tr').data('id');
+
+                $.post('/Employee/Delete', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed');
+                    }
+                });
+            });
+        });
+    </script>
+}

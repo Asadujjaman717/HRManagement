@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Add Company</h2>
+    <input type="text" id="name" placeholder="Company Name" />
+    <input type="number" id="basic" placeholder="Basic" />
+    <input type="number" id="hrent" placeholder="House Rent" />
+    <input type="number" id="medical" placeholder="Medical" />
+    <label><input type="checkbox" id="inactive" /> Is Inactive</label>
+    <button onclick="createCompany()">Save</button>
+
+    <h2>Companies</h2>
+    <ul id="companyList"></ul>
+
+    <script>
+        function loadCompanies() {
+            $.get("/api/companies", function (data) {
+                $("#companyList").empty();
+                data.forEach(c => {
+                    $("#companyList").append(`<li>${c.comName} - ${c.basic}</li>`);
+                });
+            });
+        }
+
+        function createCompany() {
+            const company = {
+                comName: $("#name").val(),
+                basic: parseFloat($("#basic").val()),
+                hrent: parseFloat($("#hrent").val()),
+                medical: parseFloat($("#medical").val()),
+                isInactive: $("#inactive").is(":checked")
+            };
+
+            $.ajax({
+                url: "/api/companies",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(company),
+                success: function () {
+                    alert("Company added!");
+                    loadCompanies();
+                }
+            });
+        }
+
+        loadCompanies();
+    </script>
+</body>
+</html>

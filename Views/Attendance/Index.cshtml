@@ -1,0 +1,209 @@
+﻿@model IEnumerable<HrManagement.Models.Attendance>
+
+@{
+    ViewData["Title"] = "Attendance Management";
+
+    var companies = ViewBag.Companies as List<HrManagement.Models.Company>;
+    var employees = ViewBag.Employees as List<HrManagement.Models.Employee>;
+    Guid selectedCompany = ViewBag.SelectedCompany ?? Guid.Empty;
+}
+
+<h2>Attendance Management</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" asp-controller="Attendance" asp-action="Index">
+            <div class="input-group">
+                <select class="form-select" name="companyId" onchange="this.form.submit()">
+                    <option disabled selected>Select a company</option>
+                    @foreach (var company in companies)
+                    {
+                        <option value="@company.ComId" selected="@(selectedCompany == company.ComId ? "selected" : null)">
+                            @company.ComName
+                        </option>
+                    }
+                </select>
+                <button class="btn btn-outline-primary" type="submit">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-end">
+        <button class="btn btn-primary" id="btnAdd">Add Attendance</button>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var att in Model)
+        {
+            <tr data-id="@att.Id">
+                <td>@att.Employee?.EmpName</td>
+                <td>@att.dtDate.ToString("yyyy-MM-dd")</td>
+                <td>@att.AttStatus</td>
+                <td>@(att.InTime.HasValue ? att.InTime.Value.ToString(@"hh\:mm") : "-")</td>
+                <td>@(att.OutTime.HasValue ? att.OutTime.Value.ToString(@"hh\:mm") : "-")</td>
+                <td>
+                    <button class="btn btn-sm btn-info btn-edit">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="attendanceForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add/Edit Attendance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" id="Id" />
+                    <input type="hidden" name="ComId" id="ComId" value="@selectedCompany" />
+
+                    <div class="mb-3">
+                        <label for="EmpId" class="form-label">Employee</label>
+                        <select class="form-select" name="EmpId" id="EmpId" required>
+                            <option value="">Select Employee</option>
+                            @foreach (var emp in employees.Where(e => e.ComId == selectedCompany))
+                            {
+                                <option value="@emp.EmpId">@emp.EmpName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dtDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" name="dtDate" id="dtDate" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="AttStatus" class="form-label">Attendance Status</label>
+                        <select class="form-select" name="AttStatus" id="AttStatus" required>
+                            <option value="">Select Status</option>
+                            <option value="P">Present</option>
+                            <option value="A">Absent</option>
+                            <option value="L">Late</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="InTime" class="form-label">Time In</label>
+                        <input type="time" class="form-control" name="InTime" id="InTime" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="OutTime" class="form-label">Time Out</label>
+                        <input type="time" class="form-control" name="OutTime" id="OutTime" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const modal = new bootstrap.Modal(document.getElementById('attendanceModal'));
+            let isEdit = false;
+
+            $('#btnAdd').click(function () {
+                isEdit = false;
+                $('#attendanceForm')[0].reset();
+                $('#Id').val('');
+                $('#ComId').val('@selectedCompany');
+                $('#modalTitle').text('Add Attendance');
+                $('#InTime').prop('disabled', false);
+                $('#OutTime').prop('disabled', false);
+                modal.show();
+            });
+
+            $('.btn-edit').click(function () {
+                isEdit = true;
+                const id = $(this).closest('tr').data('id');
+
+                $.get('/Attendance/GetById', { id }, function (data) {
+                    $('#Id').val(data.id);
+                    $('#EmpId').val(data.empId);
+                    $('#dtDate').val(data.dtDate.split('T')[0]);
+                    $('#AttStatus').val(data.attStatus);
+                    $('#InTime').val(data.inTime);
+                    $('#OutTime').val(data.outTime);
+                    adjustTimeFieldsBasedOnStatus(data.attStatus);
+                    $('#modalTitle').text('Edit Attendance');
+                    modal.show();
+                });
+            });
+
+            $('#attendanceForm').submit(function (e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const url = isEdit ? '/Attendance/Edit' : '/Attendance/Create';
+                console.log(formData);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.success) {
+                            modal.hide();
+                            location.reload();
+                        } else {
+                            alert(res.message || 'Error occurred');
+                        }
+                    }
+                });
+            });
+
+            $('.btn-delete').click(function () {
+                if (!confirm('Are you sure you want to delete this attendance?')) return;
+                const id = $(this).closest('tr').data('id');
+
+                $.post('/Attendance/Delete', { id }, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Delete failed');
+                    }
+                });
+            });
+
+            // Logic for disabling/enabling TimeIn and TimeOut
+            $('#AttStatus').change(function () {
+                const status = $(this).val();
+                adjustTimeFieldsBasedOnStatus(status);
+            });
+
+            function adjustTimeFieldsBasedOnStatus(status) {
+                if (status === "A") {
+                    $('#InTime').prop('disabled', true).val('');
+                    $('#OutTime').prop('disabled', true).val('');
+                } else {
+                    $('#InTime').prop('disabled', false);
+                    $('#OutTime').prop('disabled', false);
+                }
+            }
+        });
+    </script>
+}
