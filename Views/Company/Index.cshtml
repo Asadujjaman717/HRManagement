@@ -11,9 +11,9 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Basic %</th>
-            <th>Hrent %</th>
-            <th>Medical %</th>
+            <th>Basic </th>
+            <th>Hrent </th>
+            <th>Medical </th>
             <th>IsInactive</th>
             <th>Actions</th>
         </tr>
@@ -51,16 +51,21 @@
                         <label for="ComName" class="form-label">Company Name</label>
                         <input type="text" class="form-control" id="ComName" name="ComName" required />
                     </div>
+
+                    <div class="alert alert-info mb-3">
+                        <strong>Note:</strong> The sum of Basic, Hrent, and Medical must not exceed 1.00.
+                    </div>
+
                     <div class="mb-3">
-                        <label for="Basic" class="form-label">Basic %</label>
+                        <label for="Basic" class="form-label">Basic </label>
                         <input type="number" class="form-control" id="Basic" name="Basic" step="0.01" required />
                     </div>
                     <div class="mb-3">
-                        <label for="Hrent" class="form-label">Hrent %</label>
+                        <label for="Hrent" class="form-label">Hrent </label>
                         <input type="number" class="form-control" id="Hrent" name="Hrent" step="0.01" required />
                     </div>
                     <div class="mb-3">
-                        <label for="Medical" class="form-label">Medical %</label>
+                        <label for="Medical" class="form-label">Medical </label>
                         <input type="number" class="form-control" id="Medical" name="Medical" step="0.01" required />
                     </div>
                     <div class="form-check">                        
@@ -112,6 +117,20 @@
 
             $('#companyForm').submit(function (e) {
             e.preventDefault();
+
+                // Client-side validation
+            // Calculate sum
+        const basic = parseFloat($('#Basic').val()) || 0;
+        const hrent = parseFloat($('#Hrent').val()) || 0;
+        const medical = parseFloat($('#Medical').val()) || 0;
+        const sum = basic + hrent + medical;
+
+        // Check if sum exceeds 1
+        if (sum > 1) {
+            alert("The sum of Basic, Hrent, and Medical must not exceed 1!");
+            return false; // Prevent form submission
+        }
+
             const formData = new FormData(this);
             const url = isEdit ? '/Company/Edit' : '/Company/Create';
 

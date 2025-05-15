@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dotnet\\HrManagement\\HrManagement.csproj": {}
+    "D:\\Dotnet\\HrManagement\\HRManagement\\HrManagement.csproj": {}
   },
   "projects": {
-    "D:\\Dotnet\\HrManagement\\HrManagement.csproj": {
+    "D:\\Dotnet\\HrManagement\\HRManagement\\HrManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dotnet\\HrManagement\\HrManagement.csproj",
+        "projectUniqueName": "D:\\Dotnet\\HrManagement\\HRManagement\\HrManagement.csproj",
         "projectName": "HrManagement",
-        "projectPath": "D:\\Dotnet\\HrManagement\\HrManagement.csproj",
+        "projectPath": "D:\\Dotnet\\HrManagement\\HRManagement\\HrManagement.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Dotnet\\HrManagement\\obj\\",
+        "outputPath": "D:\\Dotnet\\HrManagement\\HRManagement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

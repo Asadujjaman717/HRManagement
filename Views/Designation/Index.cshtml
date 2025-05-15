@@ -40,6 +40,7 @@
         <thead>
             <tr>
                 <th>Designation</th>
+                <th>Department</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -48,6 +49,16 @@
             {
                 <tr data-id="@item.DesigId">
                     <td>@item.DesigName</td>
+                    <td>
+                        @if (item.Department != null)
+                        {
+                            @item.Department.DeptName
+                        }
+                        else
+                        {
+                            <span class="text-muted">Not assigned</span>
+                        }
+                    </td>
                     <td>
                         <button class="btn btn-sm btn-info btn-edit">Edit</button>
                         <button class="btn btn-sm btn-danger btn-delete">Delete</button>

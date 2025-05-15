@@ -23,6 +23,13 @@ namespace HrManagement.Controllers
         public async Task<IActionResult> Create(Company company)
         {
             Console.WriteLine("CREATE → IsInactive: " + company.IsInactive); // 🔍 LOG HERE
+                                                                             // Manual validation for the sum
+            var sum = company.Basic + company.Hrent + (company.Medical ?? 0);
+            if (sum > 1)
+            {
+                return Json(new { success = false, message = "The sum of Basic, Hrent, and Medical must not exceed 1." });
+            }
+
             company.ComId =  Guid.NewGuid();
             //if (!ModelState.IsValid)
             //{
@@ -46,6 +53,14 @@ namespace HrManagement.Controllers
         public async Task<IActionResult> Edit(Company company)
         {
             Console.WriteLine("Edit → IsInactive: " + company.IsInactive); // 🔍 LOG HERE
+
+            // Manual validation for the sum
+            var sum = company.Basic + company.Hrent + (company.Medical ?? 0);
+            if (sum > 1)
+            {
+                return Json(new { success = false, message = "The sum of Basic, Hrent, and Medical must not exceed 1." });
+            }
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Company.Update(company);
