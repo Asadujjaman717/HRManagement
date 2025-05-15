@@ -17,85 +17,85 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HrManagement
 build_property.RootNamespace = HrManagement
-build_property.ProjectDir = D:\Dotnet\HrManagement\
+build_property.ProjectDir = D:\Dotnet\HrManagement\HRManagement\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Dotnet\HrManagement
+build_property.MSBuildProjectDirectory = D:\Dotnet\HrManagement\HRManagement
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/Dotnet/HrManagement/Views/AttendanceSummary/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/AttendanceSummary/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVN1bW1hcnlcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Attendance/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Attendance/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Company/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Company/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Department/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Department/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Designation/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Designation/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzaWduYXRpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Employee/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Employee/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Home/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Home/Privacy.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Report/AttendanceTabulator.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Report/AttendanceTabulator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEF0dGVuZGFuY2VUYWJ1bGF0b3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Report/EmployeeListTabulator.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Report/EmployeeListTabulator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEVtcGxveWVlTGlzdFRhYnVsYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Report/SalaryTabulator.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Report/SalaryTabulator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XFNhbGFyeVRhYnVsYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Salary/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Salary/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Shared/Error.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Shift/Index.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Shift/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpZnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/_ViewImports.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/_ViewStart.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Dotnet/HrManagement/Views/Shared/_Layout.cshtml]
+[D:/Dotnet/HrManagement/HRManagement/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-s75kqyfb6e
