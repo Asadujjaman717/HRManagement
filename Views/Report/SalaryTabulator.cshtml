@@ -1,118 +1,4 @@
-﻿@* @{
-    ViewData["Title"] = "Salary Summary (Tabulator)";
-    var departments = ViewBag.Departments as List<HrManagement.Models.Department>;
-}
-
-<h2>Salary Report</h2>
-
-<div class="row mb-3">
-    <div class="col-md-3">
-        <select id="deptFilter" class="form-select">
-            <option value="">-- Department --</option>
-            @foreach (var dept in departments)
-            {
-                <option value="@dept.DeptId">@dept.DeptName</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select id="yearFilter" class="form-select">
-            @for (int y = DateTime.Now.Year - 5; y <= DateTime.Now.Year + 1; y++)
-            {
-                <option value="@y" selected="@(y == DateTime.Now.Year ? "selected" : null)">@y</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select id="monthFilter" class="form-select">
-            @for (int m = 1; m <= 12; m++)
-            {
-                <option value="@m" selected="@(m == DateTime.Now.Month ? "selected" : null)">
-                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
-                </option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <select id="paidFilter" class="form-select">
-            <option value="">All</option>
-            <option value="true">Paid</option>
-            <option value="false">Unpaid</option>
-        </select>
-    </div>
-    <div class="col-md-3">
-        <button id="filterBtn" class="btn btn-primary w-100">Filter</button>
-    </div>
-</div>
-
-<div class="mb-3 text-end">
-    <button class="btn btn-outline-secondary me-2" onclick="exportExcel()">Export Excel</button>
-    <button class="btn btn-outline-info me-2" onclick="exportCSV()">Export CSV</button>
-    <button class="btn btn-outline-danger" onclick="exportPDF()">Export PDF</button>
-</div>
-
-
-<div id="salary-table"></div>
-
-<link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet">
-<script src="https://unpkg.com/tabulator-tables@5.4.4/dist/js/tabulator.min.js"></script>
-
-<script>
-    let salaryTable;
-
-    function loadSalaryTable(params = {}) {
-        salaryTable = new Tabulator("#salary-table", {
-            layout: "fitColumns",
-            ajaxURL: "/Report/GetSalarySummary",
-            ajaxParams: params,
-            pagination: "local",
-            paginationSize: 10,
-            height: "500px",
-            columns: [
-                { title: "Employee", field: "empName" },
-                { title: "Gross", field: "gross", hozAlign: "right" },
-                { title: "Basic", field: "basic", hozAlign: "right" },
-                { title: "HRent", field: "hRent", hozAlign: "right" },
-                { title: "Medical", field: "medical", hozAlign: "right" },
-                { title: "Absent Amount", field: "absentAmount", hozAlign: "right" },
-                { title: "Payable", field: "payableAmount", hozAlign: "right" },
-                { title: "Status", field: "isPaid", hozAlign: "center" }
-            ]
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        loadSalaryTable();
-
-        document.getElementById("filterBtn").addEventListener("click", function () {
-            const deptId = document.getElementById("deptFilter").value;
-            const year = document.getElementById("yearFilter").value;
-            const month = document.getElementById("monthFilter").value;
-            const isPaid = document.getElementById("paidFilter").value;
-
-            salaryTable.setData("/Report/GetSalarySummary", {
-                deptId, year, month, isPaid
-            });
-        });
-    });
-
-        function exportExcel() {
-        salaryTable.download("xlsx", "SalaryReport.xlsx", { sheetName: "Salaries" });
-    }
-
-    function exportCSV() {
-        salaryTable.download("csv", "SalaryReport.csv");
-    }
-
-    function exportPDF() {
-        salaryTable.download("pdf", "SalaryReport.pdf", {
-            orientation: "portrait",
-            title: "Salary Report"
-        });
-    }
-
-</script>
- *@
+﻿
 
 @{
     ViewData["Title"] = "Salary Report";
@@ -159,7 +45,9 @@
     <!-- Tabulator JS -->
     <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 
-
+    <!-- jsPDF and AutoTable for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
     <script>
         let salaryTable;
