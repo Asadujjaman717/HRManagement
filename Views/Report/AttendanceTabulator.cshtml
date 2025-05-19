@@ -71,7 +71,7 @@
 
             $("#btnLoad").click(function () {
                 table = new Tabulator("#attendanceTable", {
-                    height: "500px",
+                    // height: "500px",
                     layout: "fitColumns",
                     ajaxURL: "/Report/GetAttendanceTabulator",
                     ajaxConfig: "GET",
@@ -82,6 +82,7 @@
                         toDate: $("#toDate").val()
                     },
                     columns: [
+                        {title: "Employee Code", field: "empCode"},
                         { title: "Employee Name", field: "empName" },
                         { title: "Date", field: "attDate" },
                         { title: "Status", field: "status" },

@@ -126,13 +126,14 @@
                 layout: "fitColumns",
                 ajaxURL: "/Report/GetEmployeeList",
                 ajaxParams: { deptId },
-                height: "500px",
+                // height: "500px",
                 pagination: "local",
                 paginationSize: 10,
                 columns: [
-                    { title: "Name", field: "empName" },
+                    { title: "Employee Code", field: "empCode"},
+                    { title: "Employee Name", field: "empName" },
                     { title: "Join Date", field: "joinDate" },
-                    { title: "Service Days", field: "serviceDays", hozAlign: "right" },
+                    { title: "Service Days", field: "serviceDays"/* , hozAlign: "right" */ },
                     { title: "Department", field: "department" },
                     { title: "Designation", field: "designation" },
                     { title: "Shift", field: "shift" }
@@ -141,3 +142,5 @@
         }
     </script>
 }
+
+            

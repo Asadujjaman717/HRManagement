@@ -79,6 +79,7 @@ namespace HrManagement.Controllers
 
             var result = employees.Select(e => new
             {
+                empCode = e.EmpCode,
                 empName = e.EmpName,
                 joinDate = e.dtJoin.ToString("yyyy-MM-dd"),
                 serviceDays = (DateTime.Now - e.dtJoin).Days,
@@ -119,6 +120,7 @@ namespace HrManagement.Controllers
 
             var data = attendance.Select(a => new
             {
+                empCode = a.Employee.EmpCode,
                 empName = a.Employee.EmpName,
                 attDate = a.dtDate.ToString("yyyy-MM-dd"),
                 status = a.AttStatus,
@@ -180,6 +182,7 @@ namespace HrManagement.Controllers
 
             var data = salaries.Select(s => new
             {
+                empCode = s.Employee.EmpCode,
                 empName = s.Employee.EmpName,
                 gross = s.Gross,
                 basic = s.Basic,

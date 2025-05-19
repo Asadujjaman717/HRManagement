@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Dotnet\\HrManagement\\HRManagement\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\repository\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:repository\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\views\\report\\salarytabulator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -15,8 +15,16 @@
       "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:views\\report\\employeelisttabulator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\views\\report\\attendancetabulator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:views\\report\\attendancetabulator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\views\\shift\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -43,10 +51,6 @@
       "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:controllers\\shiftcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\repository\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:repository\\irepository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|d:\\dotnet\\hrmanagement\\hrmanagement\\models\\shift.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{536F02F1-298B-4827-89E7-8E2170290FF7}|HrManagement.csproj|solutionrelative:models\\shift.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -66,50 +70,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 11,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shift\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shift\\Index.cshtml",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shift\\Index.cshtml",
-              "RelativeToolTip": "Views\\Shift\\Index.cshtml",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAAADQAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-10T11:44:28.919Z",
+              "DocumentIndex": 3,
+              "Title": "ReportController.cs",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ReportController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReportController.cs",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ReportController.cs",
+              "RelativeToolTip": "Controllers\\ReportController.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAowHoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T04:09:22.526Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Department\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Department\\Index.cshtml",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Department\\Index.cshtml",
-              "RelativeToolTip": "Views\\Department\\Index.cshtml",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAB4AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-15T06:36:12.097Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-14T08:31:53.848Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
@@ -117,18 +115,17 @@
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-14T09:06:28.884Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T09:06:28.884Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "AttendanceTabulator.cshtml",
               "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Report\\AttendanceTabulator.cshtml",
               "RelativeDocumentMoniker": "Views\\Report\\AttendanceTabulator.cshtml",
               "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Report\\AttendanceTabulator.cshtml",
               "RelativeToolTip": "Views\\Report\\AttendanceTabulator.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAADMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-10T11:43:02.809Z",
               "EditorCaption": ""
@@ -141,14 +138,14 @@
               "RelativeDocumentMoniker": "Views\\Report\\EmployeeListTabulator.cshtml",
               "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Report\\EmployeeListTabulator.cshtml",
               "RelativeToolTip": "Views\\Report\\EmployeeListTabulator.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACUAAAB3AAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAUwIgAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-11T10:31:42.176Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Company\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Company\\Index.cshtml",
@@ -156,8 +153,7 @@
               "RelativeToolTip": "Views\\Company\\Index.cshtml",
               "ViewState": "AgIAAJkAAAAAAAAAAAAAAEMAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-15T04:56:10.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-15T04:56:10.506Z"
             },
             {
               "$type": "Document",
@@ -167,66 +163,14 @@
               "RelativeDocumentMoniker": "Views\\Report\\SalaryTabulator.cshtml",
               "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Report\\SalaryTabulator.cshtml",
               "RelativeToolTip": "Views\\Report\\SalaryTabulator.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAB3AAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAGYAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-10T11:43:55.247Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CompanyController.cs",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\CompanyController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CompanyController.cs",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\CompanyController.cs",
-              "RelativeToolTip": "Controllers\\CompanyController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAgwD4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T03:45:09.748Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ShiftController.cs",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ShiftController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ShiftController.cs",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ShiftController.cs",
-              "RelativeToolTip": "Controllers\\ShiftController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAswCQAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T09:08:12.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Designation\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Designation\\Index.cshtml",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Designation\\Index.cshtml",
-              "RelativeToolTip": "Views\\Designation\\Index.cshtml",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAAADYAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-15T06:01:15.16Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Shift.cs",
-              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Models\\Shift.cs",
-              "RelativeDocumentMoniker": "Models\\Shift.cs",
-              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Models\\Shift.cs",
-              "RelativeToolTip": "Models\\Shift.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T09:06:26.056Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
               "Title": "IUnitOfWork.cs",
               "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Repository\\IRepository\\IUnitOfWork.cs",
               "RelativeDocumentMoniker": "Repository\\IRepository\\IUnitOfWork.cs",
@@ -239,7 +183,92 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-14T08:31:53.848Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Department\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Department\\Index.cshtml",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Department\\Index.cshtml",
+              "RelativeToolTip": "Views\\Department\\Index.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAB4AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-15T06:36:12.097Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shift\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shift\\Index.cshtml",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Shift\\Index.cshtml",
+              "RelativeToolTip": "Views\\Shift\\Index.cshtml",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAADQAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-10T11:44:28.919Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 13,
+              "Title": "CompanyController.cs",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\CompanyController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CompanyController.cs",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\CompanyController.cs",
+              "RelativeToolTip": "Controllers\\CompanyController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T03:45:09.748Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ShiftController.cs",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ShiftController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ShiftController.cs",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\ShiftController.cs",
+              "RelativeToolTip": "Controllers\\ShiftController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAswCQAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:08:12.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Designation\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Designation\\Index.cshtml",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Views\\Designation\\Index.cshtml",
+              "RelativeToolTip": "Views\\Designation\\Index.cshtml",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAAADYAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-15T06:01:15.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Shift.cs",
+              "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Models\\Shift.cs",
+              "RelativeDocumentMoniker": "Models\\Shift.cs",
+              "ToolTip": "D:\\Dotnet\\HrManagement\\HRManagement\\Models\\Shift.cs",
+              "RelativeToolTip": "Models\\Shift.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T09:06:26.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "DesignationController.cs",
               "DocumentMoniker": "D:\\Dotnet\\HrManagement\\HRManagement\\Controllers\\DesignationController.cs",
               "RelativeDocumentMoniker": "Controllers\\DesignationController.cs",
