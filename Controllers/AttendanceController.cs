@@ -64,6 +64,7 @@ namespace HrManagement.Controllers
 
             await _unitOfWork.Attendance.AddAsync(attendance);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Attendance created successfully.";
             return Json(new { success = true });
         }
 
@@ -86,6 +87,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Attendance.Update(attendance);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Attendance updated successfully.";
             return Json(new { success = true });
         }
 
@@ -100,6 +102,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Attendance.Remove(attendance);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Attendance deleted successfully.";
             return Json(new { success = true });
         }
     }

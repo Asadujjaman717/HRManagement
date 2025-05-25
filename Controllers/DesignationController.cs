@@ -47,6 +47,7 @@ namespace HrManagement.Controllers
             designation.DesigId = Guid.NewGuid();
             await _unitOfWork.Designation.AddAsync(designation);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Designation created successfully.";
             return Json(new { success = true });
         }
 
@@ -60,6 +61,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Designation.Update(designation);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Designation Edited successfully.";
             return Json(new { success = true });
         }
 
@@ -74,6 +76,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Designation.Remove(designation);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Designation Deleted successfully.";
             return Json(new { success = true });
         }
     }

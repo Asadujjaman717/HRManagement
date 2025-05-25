@@ -110,6 +110,7 @@ namespace HrManagement.Controllers
                 employee.EmpId = Guid.NewGuid();
                 await _unitOfWork.Employee.AddAsync(employee);
                 await _unitOfWork.SaveAsync();
+                TempData["success"] = "Employee created successfully.";
                 return Json(new { success = true });
             }
             catch(Exception ex)
@@ -143,6 +144,7 @@ namespace HrManagement.Controllers
 
                 _unitOfWork.Employee.Update(employee);
                 await _unitOfWork.SaveAsync();
+                TempData["success"] = "Employee Updated successfully.";
                 return Json(new { success = true });
             }
             catch(Exception ex)
@@ -172,6 +174,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Employee.Remove(employee);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Employee deleted successfully.";
             return Json(new { success = true });
         }
     }

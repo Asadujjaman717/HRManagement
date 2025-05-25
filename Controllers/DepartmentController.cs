@@ -40,6 +40,7 @@ namespace HrManagement.Controllers
             dept.DeptId = Guid.NewGuid();
             await _unitOfWork.Department.AddAsync(dept);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Department created successfully.";
             return Json(new { success = true });
         }
 
@@ -50,6 +51,7 @@ namespace HrManagement.Controllers
             {
                 _unitOfWork.Department.Update(dept);
                 await _unitOfWork.SaveAsync();
+                TempData["success"] = "Department Edited successfully.";
                 return Json(new { success = true });
             }
             return Json(new { success = false });
@@ -63,6 +65,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Department.Remove(dept);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Department Deleted successfully.";
             return Json(new { success = true });
         }
 

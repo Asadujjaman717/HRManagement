@@ -3,6 +3,8 @@
     ViewData["Title"] = "Company Management";
 }
 
+
+
 <h2>Company Management</h2>
 
 <button class="btn btn-primary mb-3" id="btnAdd">Add Company</button>
@@ -83,6 +85,10 @@
 </div>
 
 @section Scripts {
+    @* @{
+        <partial name="_ValidationScriptsPartial" />
+    } *@
+
     <script>
         $(function () {
             const modal = new bootstrap.Modal(document.getElementById('companyModal'));
@@ -151,10 +157,14 @@
                 success: function (res) {
                     if (res.success) {
                         location.reload();
+                        // toastr.success("Company created successfully.");
                     } else {
                         alert(res.message || 'Error occurred');
+                        // toastr.error(res.message || "Error occurred.");
                     }
                 }
+                   
+            
             });
         });
 

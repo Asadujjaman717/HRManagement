@@ -43,6 +43,7 @@ namespace HrManagement.Controllers
             //company.ComId = Guid.NewGuid();
             await _unitOfWork.Company.AddAsync(company);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Company created successfully.";
             return Json(new { success = true });
         }
 
@@ -65,6 +66,7 @@ namespace HrManagement.Controllers
             {
                 _unitOfWork.Company.Update(company);
                 await _unitOfWork.SaveAsync();
+                TempData["success"] = "Company updated successfully.";
                 return Json(new { success = true });
             }
             return Json(new { success = false });
@@ -78,6 +80,7 @@ namespace HrManagement.Controllers
 
             _unitOfWork.Company.Remove(company);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Company deleted successfully.";
             return Json(new { success = true });
         }
 

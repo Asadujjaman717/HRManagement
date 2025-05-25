@@ -40,6 +40,7 @@ namespace HrManagement.Controllers
             shift.ShiftId = Guid.NewGuid();
             await _unitOfWork.Shift.AddAsync(shift);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Shift created successfully.";
             return Json(new { success = true });
         }
 
@@ -48,6 +49,7 @@ namespace HrManagement.Controllers
         {
             _unitOfWork.Shift.Update(shift);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Shift updated successfully.";
             return Json(new { success = true });
         }
 
@@ -58,6 +60,7 @@ namespace HrManagement.Controllers
             if (shift == null) return Json(new { success = false });
             _unitOfWork.Shift.Remove(shift);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Shift deleted successfully.";
             return Json(new { success = true });
         }
     }

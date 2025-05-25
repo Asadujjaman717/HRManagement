@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Google Font (optional for modern look) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    
+    
 </head>
 <body>
     <header>
@@ -32,50 +36,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button> *@
-
-               @*  <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Company" asp-action="Index">Company</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-success" asp-area="" asp-controller="Designation" asp-action="Index">Designation</a>
-						</li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Shift" asp-action="Index">Shift</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Employee" asp-action="Index">Employee</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="AttendanceSummary" asp-action="Index">AttendanceSummary</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Salary" asp-action="Index">Salary</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Report" asp-action="EmployeeListTabulator">EmployeeListTabulator</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Report" asp-action="AttendanceTabulator">AttendanceTabulator</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-success" asp-area="" asp-controller="Report" asp-action="SalaryTabulator">SalaryTabulator</a>
-                        </li>
-                    </ul>
-                </div> *@
+             
 
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
@@ -152,7 +113,11 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="_Notification" />
             @RenderBody()
+
+            @* @Html.Partial("_Notification") *@
+
         </main>
     </div>
 
@@ -164,6 +129,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+   @*  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> *@
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
